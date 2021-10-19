@@ -2,6 +2,8 @@ import base64
 import requests
 import datetime
 from urllib.parse import urlencode
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 SPOTIFY_API_KEY = "6b68c3794bbb4c1cbf3ec4a8f2f3f6c3"
 SPOTIFY_API_KEY_SECRET = "73f5aa7628f7443190a6515ff45c602e"
@@ -114,7 +116,9 @@ class SpotifyAPI(object):
 
 
 # Instantiate Spotify API object
+auth_manager = SpotifyClientCredentials(SPOTIFY_API_KEY, SPOTIFY_API_KEY_SECRET)
 spotify = SpotifyAPI(SPOTIFY_API_KEY, SPOTIFY_API_KEY_SECRET)
+spotiPY = spotipy.Spotify(auth_manager=auth_manager)
 
 
 def retrieve_spotify_ids(song_name, artist_name):
@@ -143,3 +147,35 @@ def retrieve_spotify_ids(song_name, artist_name):
         artist_id = song["tracks"]["items"][0]["album"]["artists"][0]["id"]
 
     return song_id, artist_id
+
+
+def retrieve_audio_features(spotify_id):
+    """Example: retrieve_audio_features('4EEjMyQub6tgFVshlM9j1M')
+    returns a python dict
+    [{'danceability': 0.611,
+    'energy': 0.578,
+    'key': 1,
+    'loudness': -14.171,
+    'mode': 1,
+    'speechiness': 0.0676,
+    'acousticness': 0.0598,
+    'instrumentalness': 0.0219,
+    'liveness': 0.0983,
+    'valence': 0.884,
+    'tempo': 100.625,
+    'type': 'audio_features',
+    'id': '4N0TP4Rmj6QQezWV88ARNJ',
+    'uri': 'spotify:track:4N0TP4Rmj6QQezWV88ARNJ',
+    'track_href': 'https://api.spotify.com/v1/tracks/4N0TP4Rmj6QQezWV88ARNJ',
+    'analysis_url': 'https://api.spotify.com/v1/audio-analysis/4N0TP4Rmj6QQezWV88ARNJ',
+    'duration_ms': 266133,
+    'time_signature': 4}]"""
+    audio_features = spotiPY.audio_features(tracks=[spotify_id])
+    return audio_features
+
+
+audio_features = retrieve_audio_features("4EEjMyQub6tgFVshlM9j1M")
+import pprint
+
+pp = pprint.PrettyPrinter()
+pp.pprint(audio_features)
