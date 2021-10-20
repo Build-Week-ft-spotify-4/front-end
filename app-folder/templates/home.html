@@ -1,12 +1,17 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Spotify Song Suggester: Predict Similar Songs on Spotify</title>
+		<title>Spotify Song Recommender</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" /> 
+		<link rel="stylesheet" href="https://unpkg.com/picnic" /> 
+		<style>  
+			p {  
+			  text-indent: 2.0em;  
+			}  
+		</style>
 		<!--<link rel="stylesheet" href="main.css" />-->
 	</head>
 	<body class="is-preload">
@@ -14,30 +19,32 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<!-- Intro -->
-					<section class="intro">
-						<header>
-							<h1>Spotify Song Suggester</h1>
-							<p>Help users find and visualize songs that fit their personal taste.</p>
-							<ul class="actions">
-								<li><a href="#first" class="arrow scrolly"><span class="label">Next</span></a></li>
-							</ul>
-						</header>
+				<nav>
+					<a href="/" class="brand"><span>Spotify Song Recommender</span></a>
+			 
+					<!-- responsive-->
+					
+				</nav>
 
-					</section>
+				{% block content %}			
 					
 					<!-- Section -->
 					<section>
 						<header>
-							<h2>Song Recommender</h2>
+							<h2>Find songs that fit your personal taste.</h2>
 						</header>
 						<div class="content">
 							<p>
 								<strong>Enter a song</strong>
 								 to find out similar songs...
 							</p>
-							<form action="/" method="post">
+							<form action="/recommendations" method="post">
 								<div class="fields">
+									
+									<div class="field half">
+										<input type="text" name="song_name" id="song_name" placeholder="Song Name" />
+									</div>
+									<br>
 									<div class="field half">
 										<input 
 											type="text" 
@@ -46,47 +53,16 @@
 											placeholder="Artist Name" 
 										/>
 									</div>
-									<div class="field half">
-										<input type="text" name="song_name" id="song_name" placeholder="Song Name" />
-									</div>
+									<br>
 								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Submit" class="button primary"></input></li>
-								</ul>
+								<input type="submit" value="Submit" class="button primary"></input>
 							</form>
-							<div>
-								{{top_hits}}
-							</div>
+							
 						</div>
 					</section>
 
-				<!-- Section -->
-					<section>
-						<header>
-							<h2>Parameters Used in Model</h2>
-						</header>
-						<div class="content">
-							<p><strong>What are the parameters used to determine a song's audio features?</strong> </p>
-							<ul class="feature-icons">
-								<li class="icon solid fa-laptop">acousticness</li>
-								<li class="icon solid fa-bolt">danceability</li>
-								<li class="icon solid fa-signal">duration_ms</li>
-								<li class="icon solid fa-cog">energy</li>
-								<li class="icon solid fa-map-marker-alt">instrumentalness</li>
-								<li class="icon solid fa-code">liveness</li>
-								<li class="icon solid fa-laptop">loudness</li>
-								<li class="icon solid fa-bolt">speechiness</li>
-								<li class="icon solid fa-signal">tempo</li>
-								<li class="icon solid fa-cog">valence</li>
-								<li class="icon solid fa-map-marker-alt">genre</li>
-								<li class="icon solid fa-code">key</li>
-								<li class="icon solid fa-laptop">mode</li>
-								<li class="icon solid fa-bolt">time_signature</li>
-							</ul>
-							<p>With these factors we are able to find the songs closest to your input.</p>
-						</div>
-					</section>
-					
+				{% endblock %}
+				
 			</div>
 
 		

@@ -8,6 +8,9 @@ flask = "*"
 requests = "*"
 datetime = "*"
 spotipy = "*"
+flask-sqlalchemy = "*"
+pandas = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
