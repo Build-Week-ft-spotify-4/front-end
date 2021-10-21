@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 # configure app
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite3"
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # initialize database
@@ -26,6 +26,14 @@ def root():
     """Base view"""
 
     return render_template("home.html")
+
+
+@app.route("/predictor", methods=["GET", "POST"])
+def predictor_page():
+
+    """Base view"""
+
+    return render_template("predictor.html")
 
 
 @app.route("/recommendations", methods=["GET", "POST"])
